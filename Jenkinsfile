@@ -37,7 +37,7 @@ pipeline {
         stage ('API Test'){
             steps {
                 dir('api-test') {
-                    git 'https://github.com/Rtrojack/tasks-api-test'
+                    git 'https://github.com/Rtrojack/tasks-api-test.git'
                     sh 'mvn test'
                 }                
             }
