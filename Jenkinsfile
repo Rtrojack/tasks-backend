@@ -42,5 +42,22 @@ pipeline {
                 }                
             }
         }
+        stage ('Deploy Frontend'){
+            steps {
+                dir('frontend'){
+                    git 'https://github.com/Rtrojack/tasks-frontend.git'
+                    sh 'mvn clean package'
+                    deploy adapters: [tomcat8(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'                
+                }
+            }
+        }
+        stage ('Functional Test'){
+            steps {
+                dir('functional-test') {
+                    git 'https://github.com/Rtrojack/tasks-functional-test.git'
+                    sh 'mvn test'
+                }                
+            }
+        }
     }
 }
